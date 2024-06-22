@@ -43,6 +43,9 @@ fun Application.configureRouting() {
     }
     install(AutoHeadResponse)
     routing {
+        get("/") {
+            call.respondText("Hello World!", ContentType.Text.Plain)
+        }
         get<Worlds> { _ ->
             val worlds = BMClient.worlds().map { WorldResponse(it.id, it.fields.name) }.toList()
             println(Json.encodeToString(worlds))
