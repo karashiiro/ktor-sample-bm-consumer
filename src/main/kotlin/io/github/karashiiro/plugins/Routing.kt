@@ -1,7 +1,6 @@
 package io.github.karashiiro.plugins
 
 import io.github.karashiiro.BMClient
-import io.github.karashiiro.WorldFields
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.ktor.http.*
 import io.ktor.resources.*
@@ -16,10 +15,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.webjars.*
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 fun Application.configureRouting() {
     install(Resources)
@@ -48,7 +44,6 @@ fun Application.configureRouting() {
         }
         get<Worlds> { _ ->
             val worlds = BMClient.worlds().map { WorldResponse(it.id, it.fields.name) }.toList()
-            println(Json.encodeToString(worlds))
             call.respond(worlds)
         }
         get("/webjars") {
